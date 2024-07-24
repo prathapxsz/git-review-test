@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-    environment {
-        GITHUB_TOKEN = credentials('github-gpt') // GitHub personal access token credential ID
-    }
+    // environment {
+    //     GITHUB_TOKEN = credentials('github-gpt') // GitHub personal access token credential ID
+    // }
 
     stages {
 
