@@ -17,7 +17,6 @@ pipeline {
             steps {
                 script {
                     echo "Hello World"
-                    sh "curl https://get.gptscript.ai/install.sh | sh"
                     def htmlUrl = payload.pull_request.html_url
                     echo "PR URL: ${htmlUrl}"
 
