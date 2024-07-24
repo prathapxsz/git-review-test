@@ -17,6 +17,7 @@ pipeline {
             steps {
                 script {
                     echo "Hello World"
+                    def payload = readJSON text: httpRequest(requestContentType: 'APPLICATION_JSON').request.getContent()
                     def htmlUrl = payload.pull_request.html_url
                     echo "PR URL: ${htmlUrl}"
 
