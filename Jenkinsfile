@@ -17,7 +17,8 @@ pipeline {
             steps {
                 script {
                     echo "Hello World"
-                    def payload = readJSON text: httpRequest(requestContentType: 'APPLICATION_JSON').request.getContent()
+                    def payload = readJSON text: httpRequest(url: '', authentication: 'githubToken').getContent()
+                    echo payload
                     echo ${payload}
                     // def htmlUrl = payload.pull_request.html_url
                     // echo "PR URL: ${htmlUrl}"
