@@ -48,11 +48,9 @@ pipeline {
 
                     echo PR_COMMENTS_URL
 
-                    curl --help
-
                     // def jsonBody = "{\"body\": \"${REVIEW}\"}"
 
-                    sh "curl -H \"Authorization: Token ${GH_TOKEN}\" -X POST -d '{\"body\": \"${REVIEW}\" }' '${PR_COMMENTS_URL}'"
+                    sh "curl -H \"Authorization: Token ${GH_TOKEN}\" -X POST -d '{\"body\": \"Test Comment\" }' '${PR_COMMENTS_URL}'"
 
                     // sh "curl -H Authorization: Token ${GH_T${GH_TOKEN}OKEN} -X POST -d '{\"body\": \"My Review Comments\" }' '${PR_COMMENTS_URL}'"
 
