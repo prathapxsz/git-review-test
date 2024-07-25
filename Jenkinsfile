@@ -30,10 +30,8 @@ pipeline {
 
 
                     withCredentials([string(credentialsId: 'OPENAI_API_KEY', variable: 'OPENAI_API_KEY')]){
-                    
                     sh "gptscript --version"
-                    // sh "export OPENAI_API_KEY=${OPENAI_API_KEY}"
-                    
+                    sh "export OPENAI_API_KEY=${OPENAI_API_KEY}"
                     echo "PR URL: ${PR_URL}"
 
                     echo "Started REVIEW"
@@ -42,32 +40,46 @@ pipeline {
 
                     REVIEW = sh(script: "gptscript codereview.gpt --PR_URL=${PR_URL}", returnStdout: true).trim()
 
+                    echo "Completed REVIEW Below is the review"
+
+                    echo REVIEW
+
+                    echo "Started posting comment"
+
+                    echo PR_COMMENTS_URL
+
+                    // def jsonBody = "{\"body\": \"${REVIEW}\"}"
+
+                    // def replacedText = sh(script: "echo '''${REVIEW}''' | sed ':a;N;$!ba;s/\\n/<br>/g'", returnStdout: true).trim()
+
                     replacedText = REVIEW.replaceAll(~/\n/, "<br>")
+                    
+                    // def jsonBody = """{\"body\": \"${REVIEW}\"}"""
 
                     sh "curl -H \"Authorization: Token ${GH_TOKEN}\" -X POST -d '{\"body\": \"${replacedText}\"}' '${PR_COMMENTS_URL}'"
 
+                    // sh "curl -H Authorization: Token ${GH_T${GH_TOKEN}OKEN} -X POST -d '{\"body\": \"My Review Comments\" }' '${PR_COMMENTS_URL}'"
 
-                    }
-
-                    }
-                }
-            }
-        }
-
-        stage('Check PR Status') {
-            steps {
-                script {
-                    // Check if REVIEW contains 'Require Changes'
-                    if (REVIEW.contains('Require Changes')) {
-                        echo 'Code Requires Changes'
-                        currentBuild.result = 'FAILURE' // Mark the build as failed
-                        error 'Code Requires Changes' // Terminate the build with an error
-                    }
+                    // sh "curl -X POST "${PR_COMMENTS_URL}" -H "Authorization: token ${GH_TOKEN}" -H "Content-Type: application/json" -d '${jsonBody}'"
                     
-                    // Check if REVIEW contains 'Approved'
-                    if (REVIEW.contains('Approved')) {
-                        echo 'Code Approved'
-                        // Additional steps if needed for approval
+                    // githubComment(
+                    //     credentialsId: 'gpt-review-2',
+                    //     repositoryOwner: 'prathapxsz',
+                    //     repositoryName: 'git-review-test',
+                    //     issueId: PR_NUMBER.toInteger(),
+                    //     commentBody: REVIEW
+                    // )
+
+                    // githubNotify(
+                    //         description: "Automated Review Comment",
+                    //         context: "Jenkins Pipeline",
+                    //         comment: REVIEW,
+                    //         url: "${PR_URL}",
+                    //         authToken: "${GH_TOKEN}"
+                    //     )
+
+                    }
+
                     }
                 }
             }
