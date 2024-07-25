@@ -18,7 +18,9 @@ pipeline {
                 script {
                     echo "Hello World"
 
-                    echo payload.pull_request.url
+                    echo ${payload_pull_request__links_html_href}
+
+                    echo payload
                     // def payload = readJSON text: env.CHANGE_PAYLOAD // Assuming CHANGE_PAYLOAD contains the JSON payload
                     
                     // // Example: Accessing pull request number
