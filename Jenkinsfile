@@ -42,6 +42,8 @@ pipeline {
 
                     echo "Completed REVIEW, Now Post Comment to PR"
 
+                    echo REVIEW
+
                     githubComment(
                         credentialsId: 'gpt-review-2',
                         repositoryOwner: 'prathapxsz',
