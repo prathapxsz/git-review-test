@@ -58,25 +58,7 @@ pipeline {
 
                     sh "curl -H \"Authorization: Token ${GH_TOKEN}\" -X POST -d '{\"body\": \"${replacedText}\"}' '${PR_COMMENTS_URL}'"
 
-                    // sh "curl -H Authorization: Token ${GH_T${GH_TOKEN}OKEN} -X POST -d '{\"body\": \"My Review Comments\" }' '${PR_COMMENTS_URL}'"
-
-                    // sh "curl -X POST "${PR_COMMENTS_URL}" -H "Authorization: token ${GH_TOKEN}" -H "Content-Type: application/json" -d '${jsonBody}'"
                     
-                    // githubComment(
-                    //     credentialsId: 'gpt-review-2',
-                    //     repositoryOwner: 'prathapxsz',
-                    //     repositoryName: 'git-review-test',
-                    //     issueId: PR_NUMBER.toInteger(),
-                    //     commentBody: REVIEW
-                    // )
-
-                    // githubNotify(
-                    //         description: "Automated Review Comment",
-                    //         context: "Jenkins Pipeline",
-                    //         comment: REVIEW,
-                    //         url: "${PR_URL}",
-                    //         authToken: "${GH_TOKEN}"
-                    //     )
 
                     }
 
@@ -85,6 +67,24 @@ pipeline {
             }
         }
 
+        stage('Check PR Status') {
+            steps {
+                script {
+                    // Check if REVIEW contains 'Require Changes'
+                    if (REVIEW.contains('Require Changes')) {
+                        echo 'Code Requires Changes'
+                        currentBuild.result = 'FAILURE' // Mark the build as failed
+                        error 'Code Requires Changes' // Terminate the build with an error
+                    }
+                    
+                    // Check if REVIEW contains 'Approved'
+                    if (REVIEW.contains('Approved')) {
+                        echo 'Code Approved'
+                        // Additional steps if needed for approval
+                    }
+                }
+            }
+        }
     }
 
 }
