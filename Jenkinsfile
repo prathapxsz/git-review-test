@@ -50,9 +50,11 @@ pipeline {
 
                     // def jsonBody = "{\"body\": \"${REVIEW}\"}"
 
-                    def jsonBody = """{\"body\": \"${REVIEW}\"}"""
+                    def replacedText = sh(script: "echo '${REVIEW}' | sed ':a;N;$!ba;s/\\n/<br>/g'", returnStdout: true).trim()
 
-                    sh "curl -H \"Authorization: Token ${GH_TOKEN}\" -X POST -d '${jsonBody}' '${PR_COMMENTS_URL}'"
+                    // def jsonBody = """{\"body\": \"${REVIEW}\"}"""
+
+                    sh "curl -H \"Authorization: Token ${GH_TOKEN}\" -X POST -d '{\"body\": \"${replacedText}\"}' '${PR_COMMENTS_URL}'"
 
                     // sh "curl -H Authorization: Token ${GH_T${GH_TOKEN}OKEN} -X POST -d '{\"body\": \"My Review Comments\" }' '${PR_COMMENTS_URL}'"
 
