@@ -52,13 +52,13 @@ pipeline {
                     //     commentBody: REVIEW
                     // )
 
-                    githubNotify(
-                            description: "Automated Review Comment",
-                            context: "Jenkins Pipeline",
-                            comment: REVIEW,
-                            url: "${PR_URL}",
-                            authToken: "${GH_TOKEN}"
-                        )
+                    // githubNotify(
+                    //         description: "Automated Review Comment",
+                    //         context: "Jenkins Pipeline",
+                    //         comment: REVIEW,
+                    //         url: "${PR_URL}",
+                    //         authToken: "${GH_TOKEN}"
+                    //     )
 
                     }
 
@@ -68,4 +68,8 @@ pipeline {
         }
 
     }
+
+    post {
+			githubPRComment comment: githubPRMessage("XXX from [build ${PR_NUMBER}](${PR_URL})."), statusVerifier: allowRunOnStatus("SUCCESS"), errorHandler: statusOnPublisherError("UNSTABLE")
+	}
 }
