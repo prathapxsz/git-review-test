@@ -40,10 +40,19 @@ pipeline {
 
                     REVIEW = sh(script: "gptscript codereview.gpt --PR_URL=${PR_URL}", returnStdout: true).trim()
 
-                    echo "Completed REVIEW, Now Post Comment to PR"
+                    echo "Completed REVIEW Below is the review"
 
                     echo REVIEW
 
+                    echo "Started posting comment"
+
+                    sh """
+                            curl -X POST "${PR_COMMENTS_URL}" \
+                            -H "Authorization: token ${GH_TOKEN}" \
+                            -H "Content-Type: application/json" \
+                            -d '{ "body": "${REVIEW}" }'
+                        """
+                    
                     // githubComment(
                     //     credentialsId: 'gpt-review-2',
                     //     repositoryOwner: 'prathapxsz',
