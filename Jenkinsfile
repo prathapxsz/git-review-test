@@ -16,17 +16,8 @@ pipeline {
         stage('GPT Review') {
             steps {
                 script {
-                    echo "Hello World"
 
                     echo "PR URL: ${PR_URL}"
-                    // def payload = readJSON text: env.CHANGE_PAYLOAD // Assuming CHANGE_PAYLOAD contains the JSON payload
-                    
-                    // // Example: Accessing pull request number
-                    // def prNumber = payload.pull_request.number
-                    // echo "Pull Request Number: ${prNumber}"
-
-                    // def htmlUrl = payload.pull_request.html_url
-                    // echo "PR URL: ${htmlUrl}"
 
                 }
             }
