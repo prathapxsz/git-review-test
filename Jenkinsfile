@@ -52,13 +52,13 @@ pipeline {
                     //     commentBody: REVIEW
                     // )
 
-                    githubNotify(
-                            description: "Automated Review Comment",
-                            context: "Jenkins Pipeline",
-                            comment: REVIEW,
-                            url: "${PR_URL}",
-                            authToken: "${GH_TOKEN}"
-                        )
+                    // githubNotify(
+                    //         description: "Automated Review Comment",
+                    //         context: "Jenkins Pipeline",
+                    //         comment: REVIEW,
+                    //         url: "${PR_URL}",
+                    //         authToken: "${GH_TOKEN}"
+                    //     )
 
                     }
 
@@ -68,4 +68,5 @@ pipeline {
         }
 
     }
+
 }
