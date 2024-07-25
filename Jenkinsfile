@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'gptscript' }
+    agent any
 
     // environment {
     //     GITHUB_TOKEN = credentials('github-gpt') // GitHub personal access token credential ID
@@ -27,7 +27,7 @@ pipeline {
                     echo "Exporting the open key here"
                     sh "export OPENAI_API_KEY=${OPENAI_API_KEY}"
                     echo "PR URL: ${PR_URL}"
-                    sh "curl https://get.gptscript.ai/install.sh | sh"
+                    sh "sudo curl https://get.gptscript.ai/install.sh | sh"
                     // sh "sh install.sh"
                     sh "gptscript codereview.gpt --PR_URL=${PR_URL}"
                     // sh "REVIEW=$(gptscript codereview.gpt --PR_URL=${PR_URL})" 
