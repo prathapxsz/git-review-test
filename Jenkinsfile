@@ -48,11 +48,13 @@ pipeline {
 
                     echo PR_COMMENTS_URL
 
+                    def jsonBody = "{\"body\": \"${REVIEW}\"}"
+
                     sh """
                             curl -X POST "${PR_COMMENTS_URL}" \
                             -H "Authorization: token ${GH_TOKEN}" \
                             -H "Content-Type: application/json" \
-                            -d '{ "body": "${REVIEW}" }'
+                            -d '${jsonBody}'
                         """
                     
                     // githubComment(
