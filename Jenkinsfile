@@ -32,7 +32,8 @@ pipeline {
                     withCredentials([string(credentialsId: 'OPENAI_API_KEY', variable: 'OPENAI_API_KEY')]){
                     
                     sh "gptscript --version"
-                    // sh "export OPENAI_API_KEY=${OPENAI_API_KEY}"
+                    
+                    sh "export OPENAI_API_KEY=${OPENAI_API_KEY}"
                     
                     echo "PR URL: ${PR_URL}"
 
