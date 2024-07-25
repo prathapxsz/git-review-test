@@ -31,30 +31,14 @@ pipeline {
 
                     withCredentials([string(credentialsId: 'OPENAI_API_KEY', variable: 'OPENAI_API_KEY')]){
                     sh "gptscript --version"
-                    sh "export OPENAI_API_KEY=${OPENAI_API_KEY}"
-                    echo "PR URL: ${PR_URL}"
-
-                    echo "Started REVIEW"
+                    // sh "export OPENAI_API_KEY=${OPENAI_API_KEY}"
 
                     withCredentials([string(credentialsId: 'GH_TOKEN', variable: 'GH_TOKEN')]) {
 
                     REVIEW = sh(script: "gptscript codereview.gpt --PR_URL=${PR_URL}", returnStdout: true).trim()
 
-                    echo "Completed REVIEW Below is the review"
-
-                    echo REVIEW
-
-                    echo "Started posting comment"
-
-                    echo PR_COMMENTS_URL
-
-                    // def jsonBody = "{\"body\": \"${REVIEW}\"}"
-
-                    // def replacedText = sh(script: "echo '''${REVIEW}''' | sed ':a;N;$!ba;s/\\n/<br>/g'", returnStdout: true).trim()
-
                     replacedText = REVIEW.replaceAll(~/\n/, "<br>").replaceAll('"'," ").replaceAll("'"," ").replaceAll("`"," ")
                     
-                    // def jsonBody = """{\"body\": \"${REVIEW}\"}"""
 
                     sh "curl -H \"Authorization: Token ${GH_TOKEN}\" -X POST -d '{\"body\": \"${replacedText}\"}' '${PR_COMMENTS_URL}'"
 
