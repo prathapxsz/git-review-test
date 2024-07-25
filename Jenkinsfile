@@ -16,9 +16,11 @@ pipeline {
         stage('GPT Review') {
             steps {
 
-                withCredentials([string(credentialsId: 'OPENAI_API_KEY', variable: 'OPENAI_API_KEY')])
+                
                 script {
 
+                    withCredentials([string(credentialsId: 'OPENAI_API_KEY', variable: 'OPENAI_API_KEY')])
+                    echo ${OPENAI_API_KEY}
                     sh "export OPENAI_API_KEY=${OPENAI_API_KEY}"
                     echo "PR URL: ${PR_URL}"
                     sh "curl https://get.gptscript.ai/install.sh | sh"
