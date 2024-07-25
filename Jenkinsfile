@@ -33,8 +33,15 @@ pipeline {
                     sh "gptscript --version"
                     sh "export OPENAI_API_KEY=${OPENAI_API_KEY}"
                     echo "PR URL: ${PR_URL}"
-                    sh "gptscript codereview.gpt --PR_URL=${PR_URL}"
-                    // sh "REVIEW=$(gptscript codereview.gpt --PR_URL=${PR_URL})" 
+                    REVIEW = sh(script: "gptscript codereview.gpt --PR_URL=${PR_URL}", returnStdout: true).trim()
+
+                    githubComment(
+                        credentialsId: 'gpt-review-2',
+                        repositoryOwner: 'prathapxsz',
+                        repositoryName: 'git-review-test',
+                        issueId: PR_NUMBER.toInteger(),
+                        commentBody: REVIEW
+                    )
 
 
                     }
