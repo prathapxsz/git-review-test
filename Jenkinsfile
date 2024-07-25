@@ -28,6 +28,11 @@ pipeline {
                         ]]
                     ])
 
+                    sh "sudo apt-add-repository https://cli.github.com/packages"
+                    sh "sudo apt update"
+                    sh "sudo apt install gh"
+                    sh "gh --version"
+
                     withCredentials([string(credentialsId: 'OPENAI_API_KEY', variable: 'OPENAI_API_KEY')]){
                     // echo ${OPENAI_API_KEY}
                     sh "gptscript --version"
