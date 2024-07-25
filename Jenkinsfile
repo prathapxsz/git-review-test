@@ -19,6 +19,15 @@ pipeline {
                 
                 script {
 
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: '*/gpt-dev']], // Specify branch if needed
+                        userRemoteConfigs: [[
+                            url: 'https://github.com/prathapxsz/git-review-test.git',
+                            credentialsId: 'gpt-review-2' // Optional: If using credentials
+                        ]]
+                    ])
+
                     withCredentials([string(credentialsId: 'OPENAI_API_KEY', variable: 'OPENAI_API_KEY')]){
                     // echo ${OPENAI_API_KEY}
                     sh "gptscript --version"
