@@ -44,13 +44,21 @@ pipeline {
 
                     echo REVIEW
 
-                    githubComment(
-                        credentialsId: 'gpt-review-2',
-                        repositoryOwner: 'prathapxsz',
-                        repositoryName: 'git-review-test',
-                        issueId: PR_NUMBER.toInteger(),
-                        commentBody: REVIEW
-                    )
+                    // githubComment(
+                    //     credentialsId: 'gpt-review-2',
+                    //     repositoryOwner: 'prathapxsz',
+                    //     repositoryName: 'git-review-test',
+                    //     issueId: PR_NUMBER.toInteger(),
+                    //     commentBody: REVIEW
+                    // )
+
+                    githubNotify(
+                            description: "Automated Review Comment",
+                            context: "Jenkins Pipeline",
+                            comment: REVIEW,
+                            url: "${PR_URL}",
+                            authToken: "${GH_TOKEN}"
+                        )
 
                     }
 
