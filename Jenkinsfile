@@ -69,7 +69,4 @@ pipeline {
 
     }
 
-    post {
-			githubPRComment comment: githubPRMessage("XXX from [build ${PR_NUMBER}](${PR_URL})."), statusVerifier: allowRunOnStatus("SUCCESS"), errorHandler: statusOnPublisherError("UNSTABLE")
-	}
 }
