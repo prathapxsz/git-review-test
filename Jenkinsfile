@@ -50,7 +50,9 @@ pipeline {
 
                     // def jsonBody = "{\"body\": \"${REVIEW}\"}"
 
-                    def replacedText = sh(script: "echo '''${REVIEW}''' | sed ':a;N;$!ba;s/\\n/<br>/g'", returnStdout: true).trim()
+                    // def replacedText = sh(script: "echo '''${REVIEW}''' | sed ':a;N;$!ba;s/\\n/<br>/g'", returnStdout: true).trim()
+
+                    replacedText = REVIEW.replaceAll(~/\n/, "<br>")
                     
                     // def jsonBody = """{\"body\": \"${REVIEW}\"}"""
 
