@@ -27,7 +27,7 @@ pipeline {
                     sh "export OPENAI_API_KEY=${OPENAI_API_KEY}"
                     echo "PR URL: ${PR_URL}"
                     sh "curl https://get.gptscript.ai/install.sh | sh"
-                    sh "sh install.sh"
+                    // sh "sh install.sh"
                     sh "gptscript codereview.gpt --PR_URL=${PR_URL}"
                     // sh "REVIEW=$(gptscript codereview.gpt --PR_URL=${PR_URL})" 
 
