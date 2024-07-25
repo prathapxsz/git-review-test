@@ -18,7 +18,7 @@ pipeline {
                 script {
                     echo "Hello World"
 
-                    echo params.payload
+                    echo payload
                     // def payload = readJSON text: env.CHANGE_PAYLOAD // Assuming CHANGE_PAYLOAD contains the JSON payload
                     
                     // // Example: Accessing pull request number
