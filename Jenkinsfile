@@ -32,8 +32,7 @@ pipeline {
                     withCredentials([string(credentialsId: 'OPENAI_API_KEY', variable: 'OPENAI_API_KEY')]){
                     
                     sh "gptscript --version"
-                    
-                    sh "export OPENAI_API_KEY=${OPENAI_API_KEY}"
+                    // sh "export OPENAI_API_KEY=${OPENAI_API_KEY}"
                     
                     echo "PR URL: ${PR_URL}"
 
@@ -47,6 +46,18 @@ pipeline {
 
                     sh "curl -H \"Authorization: Token ${GH_TOKEN}\" -X POST -d '{\"body\": \"${replacedText}\"}' '${PR_COMMENTS_URL}'"
 
+
+                    }
+
+                    }
+                }
+            }
+        }
+
+        stage('Check PR Status') {
+            steps {
+                script {
+                    // Check if REVIEW contains 'Require Changes'
                     if (REVIEW.contains('Require Changes')) {
                         echo 'Code Requires Changes'
                         currentBuild.result = 'FAILURE' // Mark the build as failed
@@ -57,11 +68,6 @@ pipeline {
                     if (REVIEW.contains('Approved')) {
                         echo 'Code Approved'
                         // Additional steps if needed for approval
-                    }
-
-
-                    }
-
                     }
                 }
             }
