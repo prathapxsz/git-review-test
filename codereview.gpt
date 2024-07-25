@@ -19,8 +19,8 @@ Description: A tool to help you learn gh cli
 #!/usr/bin/env bash
 
 echo "The following is the help text for the gh cli and some of its sub-commands. Use these when figuring out how to construct new commands.  Note that the --search flag is used for filtering and sorting as well; there is no dedicate --sort flag."
-git --help
-git repo --help
-git pr --help
-git pr checkout --help
-git pr diff --help
+#git --help
+#git repo --help
+#git pr --help
+#git pr checkout --help
+#git pr diff --help
