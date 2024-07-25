@@ -36,7 +36,7 @@ pipeline {
 
                     echo "Started REVIEW"
 
-                    withCredentials([string(credentialsId: 'gpt-review-2', variable: 'GH_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'GH_TOKEN', variable: 'GH_TOKEN')]) {
 
                     REVIEW = sh(script: "gptscript codereview.gpt --PR_URL=${PR_URL}", returnStdout: true).trim()
 
