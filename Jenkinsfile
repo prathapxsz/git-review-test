@@ -46,6 +46,8 @@ pipeline {
 
                     echo "Started posting comment"
 
+                    echo PR_COMMENTS_URL
+
                     sh """
                             curl -X POST "${PR_COMMENTS_URL}" \
                             -H "Authorization: token ${GH_TOKEN}" \
