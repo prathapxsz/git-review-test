@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'gptscript' }
 
     // environment {
     //     GITHUB_TOKEN = credentials('github-gpt') // GitHub personal access token credential ID
@@ -21,6 +21,7 @@ pipeline {
 
                     withCredentials([string(credentialsId: 'OPENAI_API_KEY', variable: 'OPENAI_API_KEY')]){
                     // echo ${OPENAI_API_KEY}
+                    sh "gptscript -v"
                     echo "Echoing the key"
                     echo OPENAI_API_KEY
                     echo "Exporting the open key here"
