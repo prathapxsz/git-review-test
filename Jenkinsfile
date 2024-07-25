@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    // environment {
-    //     GITHUB_TOKEN = credentials('github-gpt') // GitHub personal access token credential ID
-    // }
-
     stages {
 
         stage('Clean Workspace') {
@@ -31,7 +27,6 @@ pipeline {
 
                     withCredentials([string(credentialsId: 'OPENAI_API_KEY', variable: 'OPENAI_API_KEY')]){
                     sh "gptscript --version"
-                    // sh "export OPENAI_API_KEY=${OPENAI_API_KEY}"
 
                     withCredentials([string(credentialsId: 'GH_TOKEN', variable: 'GH_TOKEN')]) {
 
